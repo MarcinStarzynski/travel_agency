@@ -12,33 +12,6 @@ const testProps = {
   description: 'promoDescription',
 };
 
-beforeAll(() => {
-  const utilsModule = jest.requireActual('../../../utils/formatTime.js');
-  utilsModule.formatTime = jest.fn(seconds => seconds);
-});
-
-describe('Component HappyHourAd', () => {
-  it('should render', () => {
-    const component = shallow(<HappyHourAd />);
-    expect(component).toBeTruthy();
-  });
-
-  it('should render correct elments in component', () => {
-    const component = shallow(<HappyHourAd />);
-
-    expect(component.exists(select.title)).toEqual(true);
-    expect(component.exists(select.description)).toEqual(true);
-  });
-
-  it('should render correct title', () => {
-    const component = shallow(<HappyHourAd {...testProps}/>);
-
-    const renderedTitle = component.find(select.title).text();
-
-    expect(renderedTitle).toEqual(testProps.title);
-  });
-});
-
 const trueDate = Date;
 
 const mockDate = customDate => class extends Date {
@@ -89,25 +62,13 @@ const checkDescriptionAfterTime = (time, delaySeconds, expectedDescription) => {
 };
 
 describe('Component HappyHourAd with mocked Date', () => {
-  checkDescriptionAtTime('11:57:58', '122');
-  checkDescriptionAtTime('11:59:59', '1');
-  checkDescriptionAtTime('13:00:00', 23 * 60 * 60 + '');
+  checkDescriptionAtTime('11:57:58', '00:02:02');
+  checkDescriptionAtTime('11:59:59', '00:00:01');
+  checkDescriptionAtTime('13:00:00', '23:00:00');
 });
 
 describe('Component HappyHourAd with mocked Date', () => {
-  checkDescriptionAfterTime('11:57:58', 5, '117');
-  checkDescriptionAfterTime('11:59:56', 3, '1');
-  checkDescriptionAfterTime('13:00:00', 2 * 60 * 60, 21 * 60 * 60 + '');
-});
-
-describe('Component HappyHourAd with mocked Date', () => {
-  checkDescriptionAtTime('12:00:00', testProps.description);
-  checkDescriptionAtTime('12:30:00', testProps.description);
-  checkDescriptionAtTime('12:59:59', testProps.description);
-});
-
-describe('Component HappyHourAd with mocked Date', () => {
-  checkDescriptionAfterTime('11:59:58', 5, testProps.description);
-  checkDescriptionAfterTime('11:59:56', 7, testProps.description);
-  checkDescriptionAfterTime('10:30:00', 2 * 60 * 60, testProps.description);
+  checkDescriptionAfterTime('11:57:58', 5, '00:01:57');
+  checkDescriptionAfterTime('11:59:56', 3, '00:00:01');
+  checkDescriptionAfterTime('13:00:00', 2 * 60 * 60, '21:00:00');
 });
