@@ -24,8 +24,6 @@ describe('Component TripSummary', () => {
     tags={expectedTags}
   />);
 
-  console.log(component.debug());
-
   it('should render correct link', () => {
     const renderedLink = component.find('.link').prop('to');
 
@@ -38,14 +36,6 @@ describe('Component TripSummary', () => {
 
     expect(renderedImage).toEqual(expectedImage);
     expect(renderedAlt).toEqual(expectedName);
-  });
-
-  it('should render correct name, cost and days', () => {
-    const renderedName = component.find('.title').text();
-    const renderedCostAndDays = component.find('.details').text();
-
-    expect(renderedName).toEqual(expectedName);
-    expect(renderedCostAndDays).toEqual(`${expectedDays} daysfrom ${expectedCost}`);
   });
 
   it('should render tags in correct spans', () => {
